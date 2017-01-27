@@ -36,9 +36,14 @@ class MainRequestHandler(webapp2.RequestHandler):
         self.response.write(page)
 
     def post(self):
-        message = cgi.escape(caesar.encrypt(self.request.get('text'), int(self.request.get('rotation'))))
-        page = make_page(message)
-        self.response.write(page)
+        if self.request.get('rotation'):
+
+            message = cgi.escape(caesar.encrypt(self.request.get('text'), int(self.request.get('rotation'))))
+            page = make_page(message)
+            self.response.write(page)
+
+        else:
+            self.response.write("<p style='color:red'>Please enter a rotation number!</p><br><a href='./'>Back</a>")
 
 
 
